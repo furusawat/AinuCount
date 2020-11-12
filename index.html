@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<head>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.0/brython.min.js">
+	</script>
+	</head>
+	<body onload="brython()">
+		<script type="text/python">
+			from browser import document
+			from AinuCount import numberStrings
+
+			def click1(ev):
+				document["words"].textContent = numberStrings(int(document["num"].value),document["input"].value,document["kind"].value)+"\n"
+				
+
+			document["result1"].bind("click",click1)
+			
+			def click2(ev):
+				tmp = ""
+				for i in range(1,201):
+					tmp += "{:3d} : ".format(i)+numberStrings(i,document["input"].value,document["kind"].value)+"\n"
+				document["words"].textContent = tmp
+
+			document["result2"].bind("click",click2)
+		</script>
+		<select id="input">
+			<option value="number">number</option>
+			<option value="things">things in general</option>
+			<option value="persons">persons</option>
+			<option value="others">others (put a word down below)</option>
+		</select>
+		<br>
+		<input type="text" id="kind" value="seta">
+		<br>
+		<br>
+		<input type="number" max=200 min=1 id="num" value=1>
+		<button id="result1">Show regarding this number</button>
+		<br>
+		<button id="result2">Show all (1-200)</button>
+		<br>
+		<br>
+		<textarea id="words" rows=20 cols=40></textarea>
+	</body>
+</html>
