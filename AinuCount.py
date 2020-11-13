@@ -1,27 +1,22 @@
-import math
-
 counters=["","sine","tu","re","ine","asikne","iwan","arwan","tupesan","sinepesan","wan"]
 numbers=["","sinep","tup","rep","inep","asik","iwan","arwan","tupes","sinepes","wanpe"]
 
-def countType():
-    while True:
-        x = input("(n)umber or (c)ounter? :")
-        if x=="n":
-            return "number"
-        if x=="c":
-            return "counter"
-        print("Please type n or c.")
-
 def counterThing():
     while True:
-        x = input("(t)hings in general, (p)ersons, or (o)thers? :")
+        x = input("Choose one: (n)umber, (t)hings in general, (p)ersons, (d)ays, t(i)mes, or (o)thers? :")
+        if x=="n":
+            return "number"
         if x=="t":
             return "things"
         if x=="p":
             return "persons"
+        if x=="d":
+            return "days"
+        if x=="i":
+            return "times"
         if x=="o":
             return "others"
-        print("Please type t, p, or o.")
+        print("Please type n, t, p, d, i, or o.")
 
 def thingName():
     x = input("Input your words :")
@@ -45,11 +40,6 @@ def numberWords(num,kind,word):
             return numbers[num]
         if num==20:
             return "hot"
-    if kind=="others":
-        if num>0 and num<=10:
-            return counters[num]+" "+word
-        if num==20:
-            return "hotne"+" "+word
     if kind=="things":
         if num>0 and num<=5:
             return counters[num]+"-p"
@@ -65,7 +55,20 @@ def numberWords(num,kind,word):
         if num==20:
             return "hotne"+"-n"
 
-    return counters[num]
+    if kind=="days":
+        word="to"
+        if num==2:
+            return "tutko"
+        if num==3:
+            return "rerko"
+    if kind=="times":
+        word="suy"
+        if num==1:
+            return "arsuy"
+    if num>0 and num<=10:
+        return counters[num]+" "+word
+    if num==20:
+        return "hotne"+" "+word
 
 def numberStrings(num,kind,word):
     if kind=="number" and num==10:
@@ -81,22 +84,18 @@ def numberStrings(num,kind,word):
     if tmp==2:
         z+=numberWords(20,kind,word)
     elif tmp%2==0:
-        z+=numberWords(int(tmp/2),"","")+"-"+numberWords(20,kind,word)
+        z+=counters[int(tmp/2)]+"-"+numberWords(20,kind,word)
     elif tmp==1:
         z+=numberWords(10,kind,word)
     elif (tmp+1)%2==0:
-        z+=numberWords(10,kind,word)+" e-"+numberWords(int(tmp/2)+1,"","")+"-"+numberWords(20,kind,word)
+        z+=numberWords(10,kind,word)+" e-"+counters[int(tmp/2)+1]+"-"+numberWords(20,kind,word)
     return z
 
 def cli_main():
-    kind="number"
     word=""
-    num=1
-    kind = countType()
-    if kind=="counter":
-        kind = counterThing()
-        if kind=="others":
-            word = thingName()
+    kind = counterThing()
+    if kind=="others":
+        word = thingName()
     num = countNumber()
     print(numberStrings(num,kind,word))
 
