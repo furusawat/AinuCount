@@ -11,3 +11,6 @@ Note: This project is heavily in WIP.
 # References
 
 亀井孝、河野六郎、千野栄一, 『言語学大辞典セレクション 日本列島の言語』, 三省堂, 1996.
+
+太田満、川村久恵、八谷麻衣, 平成20年度アイヌ語ラジオ講座テキスト, 2008.
+https://www.ff-ainu.or.jp/radio/files/08-1.pdf

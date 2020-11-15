@@ -34,7 +34,16 @@ def countNumber():
         except ValueError:
             print("Please input an integers between 1 and 200.")
 
-def numberWords(num,kind,word):
+def dialect():
+    while True:
+        x = input("(s)aru, or (i)shikari? :")
+        if x=="s":
+            return "saru"
+        if x=="i":
+            return "ishikari"
+        print("Please type s, or i.")
+
+def numberWords(num,kind,word,dlct):
     if kind=="number":
         if num>0 and num<=10:
             return numbers[num]
@@ -42,18 +51,22 @@ def numberWords(num,kind,word):
             return "hot"
     if kind=="things":
         if num>0 and num<=5:
-            return counters[num]+"-p"
+            return counters[num]+"p"
         if num>5 and num<=10:
-            return counters[num]+"-pe"
+            return counters[num]+"pe"
         if num==20:
-            return "hotne"+"-p"
+            if dlct=="ishikari":
+                return "hot"
+            return "hotnep"
     if kind=="persons":
         if num>0 and num<=5:
-            return counters[num]+"-n"
+            return counters[num]+"n"
         if num>5 and num<=10:
-            return counters[num]+"-iw"
+            return counters[num]+"iw"
         if num==20:
-            return "hotne"+"-n"
+            if dlct=="ishikari":
+                return "hot"
+            return "hotnen"
 
     if kind=="days":
         word="to"
@@ -61,6 +74,8 @@ def numberWords(num,kind,word):
             return "tutko"
         if num==3:
             return "rerko"
+        if num>3 and dlct=="saru":
+            word="rerko"
     if kind=="times":
         word="suy"
         if num==1:
@@ -68,27 +83,55 @@ def numberWords(num,kind,word):
     if num>0 and num<=10:
         return counters[num]+" "+word
     if num==20:
-        return "hotne"+" "+word
+        if dlct=="ishikari":
+            return "hot "+word
+        return "hotne "+word
 
-def numberStrings(num,kind,word):
+def numberStrings(num,kind,word,dlct):
     if kind=="number" and num==10:
         return "to"
     z=""
     if num%10!=0:
-        z+=numberWords(num%10,kind,word)
+        z+=numberWords(num%10,kind,word,dlct)
         if num>10:
             z+=" ikasma "
         else:
             return z
     tmp=int(num/10)
+    ten=numberWords(10,kind,word,dlct)
+    twenty=numberWords(20,kind,word,dlct)
+
+    if dlct=="ishikari":
+        if tmp>9:
+            if int(tmp/10)>1:
+                z+=counters[int(tmp/10)]
+            z+="atuyta "
+        tmp=tmp%10
+        if tmp==1:
+            z+=ten
+        elif tmp==2:
+            z+=twenty
+        elif tmp==0:
+            if kind=="days":
+                z+="to"
+            elif kind=="times":
+                z+="suy"
+            elif kind=="others":
+                z+=word
+            else:
+                z=z[:-1]
+        else:
+            z+=counters[int(tmp)]+twenty
+        return z
+
     if tmp==2:
-        z+=numberWords(20,kind,word)
+        z+=twenty
     elif tmp%2==0:
-        z+=counters[int(tmp/2)]+"-"+numberWords(20,kind,word)
+        z+=counters[int(tmp/2)]+twenty
     elif tmp==1:
-        z+=numberWords(10,kind,word)
+        z+=ten
     elif (tmp+1)%2==0:
-        z+=numberWords(10,kind,word)+" e-"+counters[int(tmp/2)+1]+"-"+numberWords(20,kind,word)
+        z+=ten+" e"+counters[int(tmp/2)+1]+twenty
     return z
 
 def cli_main():
@@ -97,7 +140,8 @@ def cli_main():
     if kind=="others":
         word = thingName()
     num = countNumber()
-    print(numberStrings(num,kind,word))
+    dlct = dialect()
+    print(numberStrings(num,kind,word,dlct))
 
 if __name__ == "__main__":
     cli_main()
