@@ -8,9 +8,11 @@
 		<script type="text/python">
 			from browser import document
 			from AinuCount import numberStrings
+			from AinuLetter import letterChange
 
 			def click1(ev):
-				document["words"].textContent = numberStrings(int(document["num"].value),document["input"].value,document["kind"].value,document["dialect"].value)+"\n"
+				tmp = numberStrings(int(document["num"].value),document["input"].value,document["kind"].value,document["dialect"].value)+"\n"
+				document["words"].textContent = letterChange(tmp,"latin",document["letter"].value)
 
 			document["result1"].bind("click",click1)
 			
@@ -18,7 +20,7 @@
 				tmp = ""
 				for i in range(1,201):
 					tmp += "{:3d} : ".format(i)+numberStrings(i,document["input"].value,document["kind"].value,document["dialect"].value)+"\n"
-				document["words"].textContent = tmp
+				document["words"].textContent = letterChange(tmp,"latin",document["letter"].value)
 
 			document["result2"].bind("click",click2)
 		</script>
@@ -46,6 +48,11 @@
 		<select id="dialect">
 			<option value="saru">Saru dialect</option>
 			<option value="ishikari">Ishikari dialect</option>
+		</select>
+		<br>
+		<select id="letter">
+			<option value="latin">Latin letters</option>
+			<option value="kana">Katakana letters</option>
 		</select>
 	</body>
 </html>
