@@ -78,7 +78,8 @@ cons=["k","s","t","c","n","h","p","m","y","r","w"]
 
 def dicMaker(src,tgt):
     return_dic = {}
-    for i in range(len(dic)):
+    len_tmp = len(dic)
+    for i in range(len_tmp):
         if len(dic[i][src]) == 1:
             return_dic[dic[i][src]] = dic[i][tgt]
         if len(dic[i][src]) == 2:
@@ -91,34 +92,35 @@ def dicMaker(src,tgt):
 def letterChange(words,src,tgt):
     if src==tgt:
         return words
-    result=""
+    result=[]
     if src=="latin":
         if tgt=="kana":
             tmp_dic=dicMaker(0,1)
             i=0
             for k,v in soundchange.items():
                 words = words.replace(k,v)
-            while i in range(len(words)):
+            len_tmp = len(words)
+            while i < len_tmp:
                 if words[i] in vowels:
-                    result+=tmp_dic[words[i]]
+                    result.append(tmp_dic[words[i]])
                 elif words[i] in cons:
-                    if i+1 == len(words) or words[i+1] not in vowels:
+                    if i+1 == len_tmp or words[i+1] not in vowels:
                         if words[i]=="r":
                             if i<=0 or words[i-1] not in vowels:
-                                result+=r_vowels[2]
+                                result.append(r_vowels[2])
                             else:
-                                result+=r_vowels[vowels.index(words[i-1])]
-                        elif i+1 < len(words) and words[i:i+2] in ["pp","kk"]:
-                                result+=tmp_dic["t"][" "]
-                        elif i+1 < len(words) and words[i:i+2] in ["mm"]:
-                                result+=tmp_dic["n"][" "]
+                                result.append(r_vowels[vowels.index(words[i-1])])
+                        elif i+1 < len_tmp and words[i:i+2] in ["pp","kk","ss"]:
+                                result.append(tmp_dic["t"][" "])
+                        elif i+1 < len_tmp and words[i:i+2] in ["mm"]:
+                                result.append(tmp_dic["n"][" "])
                         else:
-                            result+=tmp_dic[words[i]][" "]
+                            result.append(tmp_dic[words[i]][" "])
                     else:
-                        result+=tmp_dic[words[i]][words[i+1]]
+                        result.append(tmp_dic[words[i]][words[i+1]])
                         i+=1
                 else:
-                    result+=words[i]
+                    result.append(words[i])
                 i+=1
 
-    return result
+    return "".join(result)

@@ -2,8 +2,8 @@
 
 https://furusawat.github.io/AinuCount/
 
-This is my personal project that helps to learn the counting system in Ainu language (Saru dialect).
-My program is originally written in Python, and I convert it into JavaScript with [Brython](https://brython.info/).
+This is my personal project that helps to learn the counting system in Ainu language.
+My program is originally written in Python, and I convert it into JavaScript with [Transcrypt](https://www.transcrypt.org/).
 
 Note: This project is heavily in WIP.
 
